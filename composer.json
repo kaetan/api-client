@@ -1,0 +1,21 @@
+{
+    "name": "kaetan/api-client",
+    "description": "Basic HTTP API client for example.com",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "10.3.x-dev",
+        "guzzlehttp/guzzle": "7.7.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kaetan\\ApiClient\\": "scr/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kaetan"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
