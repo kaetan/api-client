@@ -10,6 +10,7 @@ class ServiceFactory
      * @var array<string, string>
      */
     private static array $serviceClassMap = [
+        'comments' => CommentService::class,
     ];
 
     /**
