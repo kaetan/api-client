@@ -2,15 +2,15 @@
 
 namespace Kaetan\ApiClient\Http;
 
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 use Kaetan\ApiClient\Exception\ApiException;
+use Psr\Http\Message\ResponseInterface;
 
-class HttpRequester
+class HttpRequester implements RequesterInterface
 {
-    /**
-     * @var string $baseUrl
-     */
-    private static string $baseUri = 'https://example.com';
+    public function __construct(public Client $guzzleClient)
+    {
+    }
 
     /**
      * @param string $method
@@ -18,19 +18,26 @@ class HttpRequester
      * @param array<string, string> $params
      * @return ApiResponse
      * @throws ApiException
-     * @throws GuzzleException
      */
     public function request(string $method, string $path, array $params = []): ApiResponse
     {
-        $guzzle = new \GuzzleHttp\Client(['base_uri' => self::$baseUri]);
-
         try {
-            $response = $guzzle->request($method, $path, $params);
+            $response = $this->guzzleClient->request($method, $path, $params);
         } catch (\Throwable $exception) {
             $message = $exception->getMessage();
-            throw new ApiException("Invalid response from API: $message", $exception->getCode());
+            throw new ApiException("HTTP request failed: $message", $exception->getCode());
         }
 
+        return $this->processResponse($response);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return ApiResponse
+     * @throws ApiException
+     */
+    public function processResponse(ResponseInterface $response): ApiResponse
+    {
         $body = json_decode($response->getBody(), true);
         $code = $response->getStatusCode();
 

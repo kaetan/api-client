@@ -1,6 +1,6 @@
 <?php
 
-namespace Kaetan\ApiClient\Entities;
+namespace Kaetan\ApiClient\Entity;
 
 /**
  * @property int $id

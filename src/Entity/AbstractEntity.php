@@ -1,6 +1,6 @@
 <?php
 
-namespace Kaetan\ApiClient\Entities;
+namespace Kaetan\ApiClient\Entity;
 
 abstract class AbstractEntity
 {
@@ -42,6 +42,14 @@ abstract class AbstractEntity
             $property = $data->$propertyName;
             $this->attributes[$propertyName] = $property;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return $this->attributes;
     }
 
     /**

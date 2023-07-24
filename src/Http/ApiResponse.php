@@ -5,17 +5,17 @@ namespace Kaetan\ApiClient\Http;
 class ApiResponse
 {
     /**
-     * @param array $body
+     * @param array|string $body
      * @param int $code
      */
-    public function __construct(protected array $body, protected int $code)
+    public function __construct(protected array|string $body, protected int $code)
     {
     }
 
     /**
-     * @return array
+     * @return array|string
      */
-    public function getBody(): array
+    public function getBody(): array|string
     {
         return $this->body;
     }

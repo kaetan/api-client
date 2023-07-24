@@ -2,7 +2,8 @@
 
 namespace Kaetan\ApiClient\Service;
 
-use Kaetan\ApiClient\Http\HttpRequester;
+use Kaetan\ApiClient\Exception\ApiException;
+use Kaetan\ApiClient\Http\RequesterInterface;
 
 class ServiceFactory
 {
@@ -18,22 +19,21 @@ class ServiceFactory
      */
     private array $services = [];
 
-    public function __construct(protected HttpRequester $httpRequester)
+    public function __construct(protected RequesterInterface $httpRequester)
     {
     }
 
     /**
      * @param string $name
      * @return AbstractService|null
+     * @throws ApiException
      */
     public function getService(string $name): AbstractService|null
     {
         $serviceClass = array_key_exists($name, self::$serviceClassMap) ? self::$serviceClassMap[$name] : null;
 
         if ($serviceClass === null) {
-            trigger_error('Unknown resource: ' . $name);
-
-            return null;
+            throw new ApiException('Unknown resource: ' . $name);
         }
 
         if (!array_key_exists($name, $this->services)) {

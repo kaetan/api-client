@@ -2,9 +2,8 @@
 
 namespace Kaetan\ApiClient\Service;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Kaetan\ApiClient\Entities\BasicIdEntity;
-use Kaetan\ApiClient\Entities\Comment;
+use Kaetan\ApiClient\Entity\BasicIdEntity;
+use Kaetan\ApiClient\Entity\Comment;
 use Kaetan\ApiClient\Exception\ApiException;
 
 class CommentService extends AbstractService
@@ -20,7 +19,6 @@ class CommentService extends AbstractService
     /**
      * @return Comment[]
      * @throws ApiException
-     * @throws GuzzleException
      */
     public function getComments(): array
     {
@@ -32,7 +30,6 @@ class CommentService extends AbstractService
      * @param string $text
      * @return BasicIdEntity
      * @throws ApiException
-     * @throws GuzzleException
      */
     public function postComment(string $name, string $text): BasicIdEntity
     {
@@ -49,7 +46,6 @@ class CommentService extends AbstractService
      * @param string|null $name
      * @param string|null $text
      * @return BasicIdEntity
-     * @throws GuzzleException
      * @throws ApiException
      */
     public function updateComment(int $id, string|null $name = null, string|null $text = null): BasicIdEntity
