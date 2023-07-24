@@ -1,5 +1,3 @@
-Я принял, что один файл count всегда содержит одно значение, которое необходимо добавить к общему счетчику.
-
 ```
 function count(string $location): int
 {
@@ -26,7 +24,15 @@ function count(string $location): int
                 $walker($item);
             }
         } elseif ($type === 'file' && str_ends_with($path, 'count')) {
-            $count = $count + intval(file_get_contents($path));
+            $handle = fopen($path, "r");
+
+            if ($handle) {
+                while (($line = fgets($handle)) !== false) {
+                    $count = $count + intval($line);
+                }
+
+                fclose($handle);
+            }
         }
     };
 
